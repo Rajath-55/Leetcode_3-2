@@ -1,43 +1,35 @@
 class Solution {
-private:
-    int find(int mid,vector<int>&arr,int target)
-    {
-        int sum=0;
-        for(int i=0;i<arr.size();i++)
-        {
-            if(arr[i]>=mid)
-                sum+=mid;
-            else
-                sum+=arr[i];
-        }
-        return abs(sum-target);
-    }
 public:
-    
     int findBestValue(vector<int>& arr, int target) {
+        int n = arr.size();
+        int low = 0;
+        int high = arr[n - 1];
+        int sum = 0;
+        int maxn = INT_MIN;
+        for (auto val : arr) {
+            sum += val;
+            maxn = max(maxn, val);
+        }
         
-        int n=arr.size();
-        int low=0;
-        int high=1e8;
-        sort(arr.begin(),arr.end());
-        int ans=0;
-        while(low<=high)
-        {
-            int mid=(low+high)>>1;
-            
-            int e1=find(mid,arr,target);
-            int e2=find(mid+1,arr,target);
-            
-            if(e1<=e2)
-            {
-                ans=mid;
-                high=mid-1;
+        if (sum <= target) return maxn;
+        
+        int diff = INT_MAX;
+        int res = 1;
+        
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int tempSum = 0;
+            for (int i = 0; i < arr.size(); ++i) {
+                tempSum += arr[i] >= mid ? mid : arr[i];
             }
-            else
-            {
-                low=mid+1;
+            tempSum >= target ? high = mid - 1 : low = mid + 1;
+            
+            if (abs(tempSum - target) < diff || (abs(tempSum - target) == diff && mid < res)) {
+                res = mid;
+                diff = abs(tempSum - target);
             }
         }
-        return ans;
+        
+        return res;
     }
 };
