@@ -1,3 +1,12 @@
+/*
+treemap based solution, every time check if temp.back + 1 ie next consecutive number is there in the list
+if its there then keep adding it until k elements are reached
+if cant reach k elements or if temp.back + 1 not there return false
+and update map on the way as well
+
+*/
+
+
 class Solution {
 public:
     bool isPossibleDivide(vector<int>& nums, int k) {
