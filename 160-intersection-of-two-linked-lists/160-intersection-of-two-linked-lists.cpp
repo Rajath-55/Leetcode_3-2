@@ -9,7 +9,7 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        set<ListNode*>st;
+        unordered_set<ListNode*>st;
         
         while(headA and headB){
             if(headA == headB) return headA;
