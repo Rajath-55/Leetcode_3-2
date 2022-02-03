@@ -11,30 +11,33 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        ListNode *middle = head, *fast = head->next;
-        if(not head) return true;
-        while(fast and fast->next){
-            fast = fast->next->next;
-            middle = middle->next;
+        int n = 0;
+        ListNode *node = head;
+        while(node!=NULL){
+            n++; node = node->next;
         }
-        cout<<middle->val<<"\n";
-        ListNode *temp = middle->next;
-        ListNode *prev = middle;
-        middle->next = nullptr;
-        while(temp){
-            ListNode *currNext = temp->next;
-            temp->next = prev;
-            prev = temp;
-            temp = currNext;
+        if(n==1) return head;
+        
+        int m = n/2, i=1;
+        ListNode *prev = head;
+        node = head->next;
+        prev->next = NULL;
+        while(i<m)
+        {
+            ListNode *nextNode = node->next;
+            node->next = prev;
+            prev = node;
+            node = nextNode; i++;
         }
-        temp = prev;
-    
-        while(head and temp){
-            cout<<head->val<<" "<<temp->val<<"\n";
-            if(head->val != temp->val) return false;
-            head = head->next;
-            temp = temp->next;
+        
+        if(n%2==1) node = node->next;
+        while(node!=NULL)
+        {
+            if(node->val!=prev->val) return false;
+            prev = prev->next; node = node->next;
         }
+        
         return true;
+        
     }
 };
