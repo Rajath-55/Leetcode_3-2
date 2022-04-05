@@ -8,10 +8,18 @@ public:
             return;
         }
         if(open < n){
-            recurse(open + 1, close, temp + '(');
+            open++;
+            temp+='(';
+            recurse(open, close, temp);
+            open--;
+            temp.pop_back();
         }
         if(close < open){
-            recurse(open, close + 1, temp + ')');
+            close++;
+            temp+=')';
+            recurse(open, close , temp);
+            close--;
+            temp.pop_back();
         }
         return;
         
