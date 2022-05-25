@@ -1,10 +1,19 @@
 class Solution {
 public:
     bool isPalindrome(int x) {
-        string y = to_string(x);
-        string z = y;
-        reverse(z.begin(), z.end());
-        
-        return z == y;
+      if(x < 0 || (x > 0 && x%10==0)) return false;
+        int revhalf = 0, slow = x, fast = x;
+        while(fast){ 
+            revhalf = revhalf * 10 + slow % 10;
+            cout<<revhalf<<" ";
+            slow /= 10;
+            fast /= 100;
+        }
+        return slow == revhalf || slow == revhalf / 10;
     }
 };
+
+/*
+12121
+
+*/
