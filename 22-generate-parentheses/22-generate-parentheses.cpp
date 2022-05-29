@@ -1,35 +1,24 @@
 class Solution {
 public:
     vector<string>ans;
-    int n;
-    void recurse(int open, int close, string temp){
+    
+    void backtrack(int open, int close, int n, string temp){
         if(temp.length() == 2*n){
             ans.push_back(temp);
             return;
         }
+        
         if(open < n){
-            open++;
-            temp+='(';
-            recurse(open, close, temp);
-            open--;
-            temp.pop_back();
+            backtrack(open+1, close, n, temp+'(');
         }
         if(close < open){
-            close++;
-            temp+=')';
-            recurse(open, close , temp);
-            close--;
-            temp.pop_back();
+            backtrack(open, close + 1, n, temp + ')');
         }
-        return;
-        
-        
     }
     vector<string> generateParenthesis(int n) {
-        // open bracket add, recurse, close bracket add, recurse;
-      
-        this->n = n;
-        recurse(0,0,"");
+        backtrack(0,0,n, "");
+        
         return ans;
+        
     }
 };
