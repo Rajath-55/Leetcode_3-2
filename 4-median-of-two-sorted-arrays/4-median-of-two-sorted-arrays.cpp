@@ -1,45 +1,60 @@
 class Solution {
 public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-//         int low1 = 0, high1 = nums1.size() - 1, low2 = 0, high2 = nums2.size() - 1;
-        int m = nums1.size(), n = nums2.size();
-//         if(nums1[high1] < nums2[low1]){
-//             if((m+n)%2==0){
-                
-//             }
-//         }
-        
-        vector<int>merge(m+n);
-        int i = 0, j = 0;
-        int k = 0;
-        
-        while(i < m and j < n){
-            if(nums1[i] < nums2[j]) merge[k++] = nums1[i++];
-            else merge[k++] = nums2[j++];
+    
+    double getMed(vector<int>a1, vector<int>a2, int n, int m)
+    {
+        int l = 0, h = n;
+        int total=n+m;
+        while(l<=m)
+        {
+            int i = (l + h) / 2;
+            int j = (total + 1) / 2 - i;
+
+            int min1 = (i == n)?INT_MAX:a1[i];
+            int max1 = (i == 0)?INT_MIN:a1[i - 1];
+
+            int min2 = (j == m)?INT_MAX:a2[j];
+            int max2 = (j == 0)?INT_MIN:a2[j - 1];
+
+            if(max1 <= min2 && max2 <= min1)
+            {
+                if((total) % 2 == 0)
+                    return ((double)max(max1, max2) + min(min1, min2)) / 2;
+                else
+                    return (double)max(max1, max2);
+            }
+            else if(max1 > min2)
+                h = i - 1;
+            else 
+                l = i + 1;
         }
-        while(i < m) merge[k++] = nums1[i++];
-        while(j < n) merge[k++] = nums2[j++];
         
-        for(auto x : merge) cout<<x<<' ';
-        return (m+n)&1 ? (double)merge[merge.size()/2] : (double)(merge[merge.size()/2] + merge[merge.size()/2 - 1])/2.0;
+        return 0.0;
+    }
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int n=nums1.size(), m=nums2.size();
+        if(n==0 && m==0)
+            return 0;
+        if(n==0)
+        {
+            if(m%2)
+                return nums2[m/2];
+            else
+                return (double)(nums2[m/2-1]+nums2[m/2])/2;
+        }
         
-      
+        if(m==0)
+        {
+            if(n%2)
+                return nums1[n/2];
+            else
+                return (double)(nums1[n/2-1]+nums1[n/2])/2;
+        }
         
-        
+        if(n<m)
+            return getMed(nums1,nums2,n,m);
+        else
+            return getMed(nums2,nums1,m,n);
+           
     }
 };
-
-/*
-1 3
-2
-
-
-1 2 2 2 2 2
-
-3 5 6 8
-
-
-low1 = 0, low2 = 0, high1 = m-1, high2 = n-1
-
-
-*/
