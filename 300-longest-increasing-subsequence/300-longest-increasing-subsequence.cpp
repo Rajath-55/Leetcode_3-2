@@ -9,7 +9,7 @@ public:
         
         for(int i=1; i < nums.size(); ++i){
             int maxiNow = nums[i];
-            for(int j = i-1; j >=0; --j){
+            for(int j = 0; j < i; ++j){
                 if(nums[j] < maxiNow){
                     dp[i] = max(dp[i], dp[j] + 1);
                 }
