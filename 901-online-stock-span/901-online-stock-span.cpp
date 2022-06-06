@@ -7,9 +7,8 @@ public:
     
     int next(int price) {
         int count = 1;
-        
-        while(!st.empty() and st.top().first <= price){
-            count+=st.top().second;
+        while(not st.empty() and st.top().first <= price){
+            count += st.top().second;
             st.pop();
         }
         st.push({price, count});
