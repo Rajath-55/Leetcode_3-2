@@ -1,52 +1,54 @@
 class MyCircularQueue {
 public:
-    vector<int>queue;
-    int rear;
-    int numElements;
-    int front;
-    int k;
-    
+    deque<int>q;
+    int cur_size;
+    int max_size;
     MyCircularQueue(int k) {
-        this->k = k;
-        queue.resize(k);
-        rear = 0;
-        numElements = 0;
-        front = 0;
+        max_size = k;
+        cur_size = 0;
     }
     
     bool enQueue(int value) {
-        if(this->isFull()) return false;
-        queue[rear] = value;
-        rear = (rear + 1)%k;
-        numElements++;
-        return true;
+        if(cur_size < max_size){
+            q.push_back(value);
+            cur_size ++;
+            return true;
+        }
+        
+        return false;
     }
     
     bool deQueue() {
-        if(isEmpty()) return false;
-        numElements--;
-        front = front +1;
-        front%=k;
-        return true;
+        if(cur_size != 0)
+        {
+            q.pop_front();
+            cur_size --;
+            return true;
+        }
+        
+        return false;
+        
+        
     }
     
     int Front() {
-        if(isEmpty()) return -1;
-        return queue[front];
+        if(cur_size != 0)
+            return q.front();
+        return -1;
     }
     
     int Rear() {
-        if(isEmpty()) return -1;
-        if(rear - 1 < 0) return queue.back();
-        return queue[rear - 1];
+        if(cur_size != 0)
+        return q.back();
+        return -1;
     }
     
     bool isEmpty() {
-        return numElements == 0;
+        return cur_size == 0;
     }
     
     bool isFull() {
-        return numElements == k;
+        return cur_size == max_size;
     }
 };
 
@@ -59,9 +61,4 @@ public:
  * int param_4 = obj->Rear();
  * bool param_5 = obj->isEmpty();
  * bool param_6 = obj->isFull();
- 
- 
- 1 2 3 4
-   
- 
  */
