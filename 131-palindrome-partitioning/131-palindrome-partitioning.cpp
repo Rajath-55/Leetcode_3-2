@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<vector<int>>dp;
+    vector<vector<bool>>dp;
     vector<vector<string>>ans;
     void dfs(int start, vector<string>temp, string &s){
         if(start == s.length()){
@@ -18,7 +18,7 @@ public:
     }
     vector<vector<string>> partition(string s) {
         int n = s.length();
-        dp.resize(n, vector<int>(n));
+        dp.resize(n, vector<bool>(n));
         
         for(int i = 0; i < n; ++i){
             int start = i, end = i;
