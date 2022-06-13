@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>>isPal;
     int ans;
-    vector<vector<int>>cache;
+    vector<int>cache;
     void filldp(string s){
         for(int i = 0; i < s.length(); ++i){
             int start = i, end = i;
@@ -13,19 +13,19 @@ public:
         }
     }
     
-    int recurse(string s, int start, int end){
-        if(start == end or isPal[start][end]) return 0;
+    int recurse(string s, int start){
+        if(start == s.length() - 1 or isPal[start][s.length() - 1]) return 0;
         
-        if(cache[start][end] != -1) return cache[start][end];
+        if(cache[start] != -1) return cache[start];
         
         int minCuts = s.length() - 1;
         
-        for(int i = start; i <= end; ++i){
+        for(int i = start; i < s.length(); ++i){
             if(isPal[start][i]){
-                minCuts = min(minCuts, 1 + recurse(s, i + 1, end));
+                minCuts = min(minCuts, 1 + recurse(s, i + 1));
             }
         }
-        return cache[start][end] = minCuts;
+        return cache[start] = minCuts;
         
     }
     
@@ -34,9 +34,9 @@ public:
         int n = s.length();
         ans = 0;
         isPal.resize(n + 1, vector<int>(n + 1));
-        cache.resize(n + 1, vector<int>(n + 1, -1));
+        cache.resize(n + 1, -1);
         filldp(s);
         
-        return recurse(s, 0, n - 1);
+        return recurse(s, 0);
     }
 };
