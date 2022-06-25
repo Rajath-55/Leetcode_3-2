@@ -1,42 +1,34 @@
 class Solution {
 public:
-    vector<vector<int>>isPal;
-    int ans;
+    vector<vector<int>>dp;
     vector<int>cache;
-    void filldp(string s){
-        for(int i = 0; i < s.length(); ++i){
-            int start = i, end = i;
-            while(start >= 0 and end < s.length() and s[start] == s[end]) isPal[start--][end++] = 1;
-            start = i;
-            end = i + 1;
-            while(start >= 0 and end < s.length() and s[start] == s[end]) isPal[start--][end++] = 1;
-        }
-    }
     
-    int recurse(string s, int start){
-        if(start == s.length() - 1 or isPal[start][s.length() - 1]) return 0;
+    int recurse(int idx, string s){
+        if(idx == s.length() - 1 or dp[idx][s.length() - 1]) return 0;
+        if(cache[idx] != -1) return cache[idx];
         
-        if(cache[start] != -1) return cache[start];
+        int mini = s.length() - 1;
         
-        int minCuts = s.length() - 1;
-        
-        for(int i = start; i < s.length(); ++i){
-            if(isPal[start][i]){
-                minCuts = min(minCuts, 1 + recurse(s, i + 1));
+        for(int i = idx; i < s.length(); ++i){
+            if(dp[idx][i]){
+                mini = min(mini, 1 + recurse(i + 1, s));
             }
         }
-        return cache[start] = minCuts;
-        
+        return cache[idx] = mini;
     }
-    
     
     int minCut(string s) {
         int n = s.length();
-        ans = 0;
-        isPal.resize(n + 1, vector<int>(n + 1));
-        cache.resize(n + 1, -1);
-        filldp(s);
+        cache.resize(n, -1);
+        dp.resize(n, vector<int>(n));
+        for(int i = 0; i < n; ++i){
+            int start = i, end = i;
+            while(start >= 0 and end < n and s[start] == s[end]) dp[start--][end++] = 1;
+            start = i;
+            end = i + 1;
+            while(start >= 0 and end < n and s[start] == s[end]) dp[start--][end++] = 1;
+        }
         
-        return recurse(s, 0);
+        return recurse(0, s);
     }
 };
