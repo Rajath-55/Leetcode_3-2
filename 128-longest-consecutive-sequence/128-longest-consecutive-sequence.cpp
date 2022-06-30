@@ -12,7 +12,7 @@ public:
         it++;
         while(it != st.end()){
             if(*it == curr + 1){
-                cout<<*it<<"\n";
+                // cout<<*it<<"\n";
                 curr = *it;
                 ans++;
             }else{
