@@ -10,7 +10,7 @@ public:
         int para = find(a);
         int parb = find(b);
         
-        cout<<para<<" "<<parb<<"\n";
+        // cout<<para<<" "<<parb<<"\n";
         if(para == parb) return;
         
        
