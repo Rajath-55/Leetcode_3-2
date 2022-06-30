@@ -1,45 +1,22 @@
 class Solution {
 public:
-    vector<int>parent,rank;
-    int find(int a){
-        if(parent[a] == -1) return a;
-        return parent[a] = find(parent[a]);
-    }
-    
-    void my_union(int a, int b){
-        int para = find(a);
-        int parb = find(b);
-        
-        // cout<<para<<" "<<parb<<"\n";
-        if(para == parb) return;
-        
-       
-        if(rank[para] < rank[parb]){
-            parent[parb] = para;
-            rank[parb] += rank[para];
-        }else{
-            parent[para] = parb;
-            rank[para] += rank[parb];
+
+    void dfs(vector<vector<int>>& m,int vertex,vector<bool> & visited){
+        visited[vertex]=true;
+        for(int j=0;j<m.size();j++){ //yha par for each loop kaam ni krrha tha eg for(int child:m[vertex]) ni chla idhar
+            if(!visited[j] && m[vertex][j]==1)
+                dfs(m,j,visited);
         }
-        
     }
-    int findCircleNum(vector<vector<int>>& isConnected) {
-        parent.resize(isConnected.size(), -1);
-        rank.resize(isConnected.size(), 0);
-        
-        for(int i = 0; i < isConnected.size(); ++i){
-            for(int j = 0; j < isConnected[i].size(); ++j){
-                if(isConnected[i][j]){
-                    rank[i] = rank[j] = 1;
-                    my_union(i, j);
-                }
-            }
+    int findCircleNum(vector<vector<int>>& m) {
+           vector<bool> visited(m.size(),false);
+        int count=0;
+        for(int i=0;i<m.size();i++){
+            if(!visited[i]){
+              count++; 
+                dfs(m,i,visited);
+            }      
         }
-        
-        int ans = 0;
-        
-        for(int i = 0; i < parent.size(); ++i) ans += parent[i] == -1;
-        return ans;
+        return count;
     }
-    
 };
