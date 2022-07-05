@@ -16,9 +16,8 @@ public:
                     }
                     start++;
                 }
-            }else{
-                ans = max(ans, end - start + 1);
             }
+            ans = max(ans, end - start + 1);
             end++;
             
         }
