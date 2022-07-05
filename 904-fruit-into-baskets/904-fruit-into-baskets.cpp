@@ -8,9 +8,6 @@ public:
         while(end < fruits.size()){
             mp[fruits[end]]++;
             
-            if(mp.size() == 2) ans = max(ans, end - start + 1);
-            else if(mp.size() < 2) ans = end - start + 1;
-            
             if(mp.size() > 2){
                 while(start <= end and mp.size() > 2){
                     mp[fruits[start]]--;
@@ -19,6 +16,8 @@ public:
                     }
                     start++;
                 }
+            }else{
+                ans = max(ans, end - start + 1);
             }
             end++;
             
