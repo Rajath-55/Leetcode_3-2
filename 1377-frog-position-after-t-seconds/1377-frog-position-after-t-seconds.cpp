@@ -19,29 +19,27 @@ public:
 
             for(int i = 0; i < size; ++i){
                 auto [node, prob] = q.front();
-                cout<<node<<" "<<prob<<"\n";
                 q.pop();
                 
                 vis[node] = 1;
-                if(t == 0){
-                    ans += node == target ? prob : 0;
-                    continue;
-                }
-                int children = 0;
-                for(auto &x : g[node]) children += !vis[x];
                 
-                if(children == 0){
-                    ans += node == target ? prob : 0;
+                if(t == 0 and node == target) return prob;
+                if(t > 0 and node == target){
+                    for(auto &x : g[node]){
+                        if(!vis[x]) return 0.0;
+                    }
+                    return prob;
                 }
+                if(t < 0 and node != target) return 0.0;
                 
-                for(auto x : g[node]){
-                    if(not vis[x]) q.push({x, prob/children});
-                }
+                int count = 0;
+                for(auto &x : g[node]) count+=!vis[x];
                 
+                for(auto x : g[node]) if(!vis[x]) q.push({x, prob/count});
             }
             t--;
         }
-        return ans;
+        return 0.0;
         
     }
 };
