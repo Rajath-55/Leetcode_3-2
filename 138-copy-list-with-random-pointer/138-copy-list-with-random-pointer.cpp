@@ -19,7 +19,7 @@ public:
     Node* copyRandomList(Node* head) {
         unordered_map<Node *, Node*> addresses;
         
-        Node *curr = head, *prev = nullptr, *copied = nullptr;
+        Node *curr = head;
         
         while(curr){
             Node *newNode = new Node(curr->val);
