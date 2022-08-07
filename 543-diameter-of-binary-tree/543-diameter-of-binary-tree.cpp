@@ -18,14 +18,14 @@ public:
         
         int left = helper(root->left);
         int right = helper(root->right);
-        ans = max(ans, left + right + 1);
+        ans = max(ans, left + right);
         return 1 + max(left,right);
     }
     
     int diameterOfBinaryTree(TreeNode* root) {
         if(not root) return 0;
          helper(root);
-        return --ans;
+        return ans;
        
     }
 };
